@@ -1,4 +1,4 @@
-import { onMounted, Ref, ref, watch } from 'vue'
+import { onMounted, Ref, ref, useTemplateRef, watch } from 'vue'
 import { useModal } from '../../Modal'
 import { useElasticsearchAdapter } from '../../CallElasticsearch'
 import { QMenu } from 'quasar'
@@ -20,7 +20,7 @@ export type IndexRowProps = {
 }
 
 export const useIndexRow = (props: IndexRowProps, emit: any) => {
-  const menu: Ref<QMenu | null> = ref(null)
+  const menu = useTemplateRef<QMenu>('menu')
   const aliases: Ref<string[]> = ref([])
 
   const { openModalWith } = useModal()

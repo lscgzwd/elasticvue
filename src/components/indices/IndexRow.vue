@@ -203,5 +203,5 @@ const afterDelete = (index: string) => {
   emitReloadAndCloseMenu()
 }
 
-const { menu, aliases, openModalWith, loading, emitReloadAndCloseMenu, showDocuments } = useIndexRow(props, emit)
+const { aliases, openModalWith, loading, emitReloadAndCloseMenu, showDocuments } = useIndexRow(props, emit)
 </script>
