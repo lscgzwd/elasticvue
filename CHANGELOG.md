@@ -3,6 +3,7 @@
 ## 1.11.1
 
 * fix cloning indices, fixes [#331](https://github.com/cars10/elasticvue/issues/331)
+* reverts #294
 
 ## 1.11.0
 
