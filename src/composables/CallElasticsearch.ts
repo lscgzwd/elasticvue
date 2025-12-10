@@ -59,14 +59,27 @@ export function useElasticsearchAdapter() {
       try {
         const response = await elasticsearchAdapter.call(method, ...args)
         if (!response) return Promise.resolve()
-
-        const contentType = response.headers.get('content-type')
         let body
-        if (contentType && contentType.includes('application/json')) {
-          const text = await response.text()
-          body = parseJson(text)
+        // fix https://github.com/cars10/elasticvue/issues/334
+        if (Array.isArray(response)) {
+          body = []
+          response.map(async (item) => {
+            const contentType = item.headers.get('content-type')
+            if (contentType && contentType.includes('application/json')) {
+              const text = await item.text()
+              body.push(parseJson(text))
+            } else {
+              body.push(true)
+            }
+          })
         } else {
-          body = true
+          const contentType = response.headers.get('content-type')
+          if (contentType && contentType.includes('application/json')) {
+            const text = await response.text()
+            body = parseJson(text)
+          } else {
+            body = true
+          }
         }
 
         requestState.value = {
